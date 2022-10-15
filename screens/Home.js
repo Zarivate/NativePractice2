@@ -31,7 +31,7 @@ const Home = () => {
     <SafeAreaView className="bg-white pt-5">
       <Text className="text-red-500">
         {/* Header goes here */}
-        <View className="flex-row pb-3 items-center mx-4 space-x-2">
+        <View className="flex flex-row pb-3 items-center mx-4 space-x-2">
           <Image
             source={{
               uri: "https://links.papareact.com/wru",
@@ -40,7 +40,7 @@ const Home = () => {
           />
 
           {/* Find a way to get the top view to properly take up the correct space regardless of user screen size */}
-          <View className="flex-1 w-72">
+          <View className="flex-1 w-[75vw]">
             <Text className="font-bold text-gray-400 text-xs">
               Deliver Now!
             </Text>
@@ -54,7 +54,7 @@ const Home = () => {
         </View>
         {/* Searchbar here */}
         <View className="flex-row items-center space-x-2 pb-2 mx-4">
-          <View className="flex-row flex-1 w-8px space-x-2 bg-gray-200 p-3">
+          <View className="flex-row flex-1 w-[87vw] space-x-2 bg-gray-200 p-3">
             <MagnifyingGlassIcon size={20} color="gray" />
             <TextInput
               placeholder="Restaurants and cuisine"
