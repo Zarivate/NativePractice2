@@ -1,13 +1,7 @@
 import { View, Text, Image, TextInput, ScrollView } from "react-native";
-import React, { useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import {
-  SafeAreaView,
-  SafeAreaProvider,
-  SafeAreaInsetsContext,
-  useSafeAreaInsets,
-  initialWindowMetrics,
-} from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 import {
   UserIcon,
   ChevronDownIcon,
@@ -16,10 +10,14 @@ import {
 } from "react-native-heroicons/outline";
 import Categories from "../components/Categories";
 import Featured from "../components/Featured";
+import client from "../server/sanity";
 
 const Home = () => {
   // Gives access to navigation object
   const navigation = useNavigation();
+
+  // State for displaying featured dishes
+  const [featuredCategories, setFeaturedCategories] = useState([]);
 
   // As soon as the screen appears on user device, do some sort of effect
   useLayoutEffect(() => {
@@ -27,6 +25,23 @@ const Home = () => {
     navigation.setOptions({
       headerShown: false,
     });
+  }, []);
+
+  // On initial load of app, data is being fetched from Sanity backend
+  useEffect(() => {
+    client
+      .fetch(
+        `*[_type == "featured"] {
+      ...,
+      restaurants[]->{
+        ...,
+        dishes[]->
+      }
+    }`
+      )
+      .then((data) => {
+        setFeaturedCategories(data);
+      });
   }, []);
 
   return (
