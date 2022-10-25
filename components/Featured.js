@@ -1,9 +1,35 @@
 import { View, Text, ScrollView } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ArrowRightIcon } from "react-native-heroicons/solid";
 import RestaurantCards from "./RestaurantCards";
+import client from "../server/sanity";
 
 const Featured = ({ id, title, description }) => {
+  const [restaurants, setRestaurants] = useState([]);
+
+  // useEffect to retrieve only the restaurant data with a matching id to be displayed
+  useEffect(() => {
+    client
+      .fetch(
+        `*[_type == "featured" && _id == $id] {
+      ...,
+      restaurants[]->{
+        ...,
+        dishes[]->,
+        type-> {
+          name
+        }
+      },
+    }[0]`,
+        { id: id }
+      )
+      .then((data) => {
+        setRestaurants(data?.restaurants);
+      });
+  }, []);
+
+  console.log(restaurants);
+
   return (
     <View>
       <View className="mt-4 flex-row items-center justify-between px-4">

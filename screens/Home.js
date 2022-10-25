@@ -87,21 +87,14 @@ const Home = () => {
         {/* Food Categories here */}
         <Categories />
         {/* Fetured cuisine goes here */}
-        <Featured
-          id="1"
-          title="Featured"
-          description="We were paid to put these here"
-        />
-        <Featured
-          id="2"
-          title="Tasty Discounts"
-          description="These discounts are as tasty as the food!"
-        />
-        <Featured
-          id="3"
-          title="Ofers near you!"
-          description="Support your local restaurants today"
-        />
+        {featuredCategories?.map((category) => (
+          <Featured
+            key={category._id}
+            id={category._id}
+            title={category.name}
+            description={category.short_description}
+          />
+        ))}
       </ScrollView>
     </SafeAreaView>
   );
