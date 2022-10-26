@@ -45,43 +45,22 @@ const Featured = ({ id, title, description }) => {
         showsHorizontalScrollIndicator={false}
         className="pt-4"
       >
+        {restaurants?.map((restaurant) => {
+          <RestaurantCards
+            key={restaurant._id}
+            id={restaurant._id}
+            imgUrl={restaurant.image}
+            address={restaurant.address}
+            title={restaurant.name}
+            rating={restaurant.rating}
+            genre={restaurant.type?.name}
+            short_description={restaurant.short_description}
+            dishes={restaurant.dishes}
+            long={restaurant.long}
+            lat={restaurant.lat}
+          />;
+        })}
         {/* Restaurant cards go here */}
-        <RestaurantCards
-          id={123}
-          imgUrl="https://links.papareact.com/gn7"
-          title="It is edible"
-          rating="3.3"
-          genre="Mongolian"
-          address="1600 Pennsylvania Avenue"
-          short_description="testing short description"
-          dishes={[]}
-          long={20.7}
-          lat={0.5}
-        />
-        <RestaurantCards
-          id={123}
-          imgUrl="https://links.papareact.com/gn7"
-          title="It is edible"
-          rating="3.3"
-          genre="Mongolian"
-          address="1600 Pennsylvania Avenue"
-          short_description="testing short description"
-          dishes={[]}
-          long={20.7}
-          lat={0.5}
-        />
-        <RestaurantCards
-          id={123}
-          imgUrl="https://links.papareact.com/gn7"
-          title="It is edible"
-          rating="3.3"
-          genre="Mongolian"
-          address="1600 Pennsylvania Avenue"
-          short_description="testing short description"
-          dishes={[]}
-          long={20.7}
-          lat={0.5}
-        />
       </ScrollView>
     </View>
   );
