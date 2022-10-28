@@ -2,7 +2,7 @@ import { View, Text, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import { ArrowRightIcon } from "react-native-heroicons/solid";
 import RestaurantCards from "./RestaurantCards";
-import client from "../server/sanity";
+import client, { urlFor } from "../server/sanity";
 
 const Featured = ({ id, title, description }) => {
   const [restaurants, setRestaurants] = useState([]);
@@ -26,9 +26,7 @@ const Featured = ({ id, title, description }) => {
       .then((data) => {
         setRestaurants(data?.restaurants);
       });
-  }, []);
-
-  console.log(restaurants);
+  }, [id]);
 
   return (
     <View>
@@ -45,7 +43,7 @@ const Featured = ({ id, title, description }) => {
         showsHorizontalScrollIndicator={false}
         className="pt-4"
       >
-        {restaurants?.map((restaurant) => {
+        {restaurants?.map((restaurant) => (
           <RestaurantCards
             key={restaurant._id}
             id={restaurant._id}
@@ -58,9 +56,8 @@ const Featured = ({ id, title, description }) => {
             dishes={restaurant.dishes}
             long={restaurant.long}
             lat={restaurant.lat}
-          />;
-        })}
-        {/* Restaurant cards go here */}
+          />
+        ))}
       </ScrollView>
     </View>
   );
