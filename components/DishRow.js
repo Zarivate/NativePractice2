@@ -8,6 +8,7 @@ import {
   addToBasket,
   selectBasketItems,
   selectBasketItemsWithId,
+  removeFromBasket,
 } from "../features/basketSlice";
 
 const DishRow = ({ id, name, description, price, image }) => {
@@ -18,6 +19,12 @@ const DishRow = ({ id, name, description, price, image }) => {
 
   const addItem = () => {
     dispatch(addToBasket({ id, name, description, price, image }));
+  };
+
+  const removeItem = () => {
+    // If user attempt to remove an item that is already at 0, just return
+    if (!items.length > 0) return;
+    dispatch(removeFromBasket({ id }));
   };
 
   return (
@@ -52,8 +59,13 @@ const DishRow = ({ id, name, description, price, image }) => {
       {isPressed && (
         <View className="bg-white px-4">
           <View className="flex-row items-center space-x-2 pb-2">
-            <TouchableOpacity>
-              <MinusCircleIcon size={40} color="#00CCBB" />
+            <TouchableOpacity disabled={!items.length} onPress={removeItem}>
+              <MinusCircleIcon
+                size={40}
+                // Depending on whether user has an item in the bag or not, the color on the minus icon will change. It also won't
+                // let the user even touch it if no items are found in the bag
+                color={items.length > 0 ? "#00CCBB" : "gray"}
+              />
             </TouchableOpacity>
             <Text>{items.length}</Text>
             <TouchableOpacity onPress={addItem}>
